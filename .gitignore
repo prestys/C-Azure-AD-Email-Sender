@@ -1,0 +1,8 @@
+Properties
+wwwroot
+Shared
+_Imports.razor
+App.razor
+appsettings.Development.json
+appsettings.json
+Program.cs

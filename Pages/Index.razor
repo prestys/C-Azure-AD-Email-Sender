@@ -1,0 +1,44 @@
+﻿@page "/"
+@using Radzen
+@using Radzen.Blazor
+@using CSharp_Azure_Email.Models
+@using System;
+@using System.Drawing;
+@using System.IO;
+
+<PageTitle>Email Sender</PageTitle>
+
+<h1>This is a test Email Sender using Azure AD</h1>
+
+<RadzenContent>
+    <RadzenLabel Text="Enter Email"/>
+    <RadzenTextBox @bind-Value=@(UserEmail)/>
+    <RadzenButton Text="Send Email!" Click=@(EmailFormSubmit) />
+</RadzenContent>
+
+@code {
+
+    public string UserEmail { get; set; }
+    
+    public async Task EmailFormSubmit()
+    {   
+        var __newEmail = new EmailSender(
+            subject: "Email Subject",
+            contentType: "HTML",
+            body: 
+                "<html>" +
+                    "<body style=\"background-color:white; margin: 16px 0;\">" +
+                        "<div style=\"width: 100%; text-align: center;\">" +
+                            "<h1 style=\"color:black; font-weight: 700;\">Email Heading</h1>" +
+                        "</div>" +
+                        "<div style=\"width: 100%; text-align: center;\">" +
+                            $"<p style=\"color: white; font-weight: 700; font-size: 24px;\">Email Body</p>" +
+                        "</div>" +
+                    "</body>" +
+                "</html>",
+            addresses: new List<string>() { UserEmail }
+        );
+        await __newEmail.SendEmail();
+    }
+
+}
